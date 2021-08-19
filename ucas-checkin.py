@@ -8,7 +8,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
-from webdriver_manager.chrome import ChromeDriverManager
 
 LOGIN_URL = 'https://passport.ustc.edu.cn/login?service=https%3A%2F%2Fweixine.ustc.edu.cn%2F2020%2Fcaslogin'
 RETRY = 5
@@ -25,8 +24,9 @@ def main():
         data[key] = value
 
     options = Options()
-    options.headless = True
-    driver = webdriver.Chrome(executable_path=ChromeDriverManager().install(),
+    options.add_argument('--no-sandbox')
+    options.add_argument('--headless')
+    driver = webdriver.Chrome(executable_path='/usr/bin/chromedriver',
                               options=options)
 
     driver.get(LOGIN_URL)
