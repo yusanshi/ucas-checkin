@@ -15,7 +15,7 @@
 
 - 环境要求：一个 24 小时开机的 Linux 操作系统（需要使用 systemd，如 Ubuntu 16.04, Debian Jessie, CentOS 7, Fedora 等，树莓派也行），Python 3.6+；
 
-- ```bash
+-   ```bash
     git clone https://github.com/yusanshi/ucas-checkin && cd ucas-checkin
     sudo pip3 install -r requirements.txt
     sudo cp ucas-checkin.py /root/ucas-checkin.py
