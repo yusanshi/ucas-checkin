@@ -22,7 +22,7 @@
 
 -   ```bash
     git clone https://github.com/yusanshi/ucas-checkin && cd ucas-checkin
-    sudo /usr/bin/python3 -m pip install selenium easyocr
+    sudo -H /usr/bin/python3 -m pip install selenium easyocr
     sudo apt-get install chromium-chromedriver # 非 Ubuntu/Debian 系统自行使用合适的包管理器安装
     sudo cp ucas-checkin.py /root/ucas-checkin.py
     sudo cp ucas-checkin.{service,timer} /etc/systemd/system/

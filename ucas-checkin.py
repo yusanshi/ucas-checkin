@@ -1,5 +1,6 @@
 import os
 import easyocr
+import warnings
 
 from time import sleep
 from selenium import webdriver
@@ -68,6 +69,9 @@ def notify_myself(message):
 
 
 if __name__ == '__main__':
+    # https://github.com/pytorch/pytorch/issues/54846
+    # Suppress the annoying warning
+    warnings.filterwarnings('ignore', category=UserWarning)
     for i in range(RETRY):
         try:
             main()
