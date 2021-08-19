@@ -4,7 +4,7 @@
 
 ## 背景
 
-国科大每日健康打卡系统的字段经常变动，采用手动 POST 的思路时可能需要频繁更改代码（如清华大学健康打卡系统也经常变动字段，用于清华大学健康打卡的项目 [iBug/thu-checkin](https://github.com/iBug/thu-checkin) 需跟随修改代码：bd6aee2a61200d004e40a5ebc4def6afabf4b020、49a90dfe14ea99f7d0c9e4e3f5ceef6f30167087、566e1ead518f856194be73e481f04af4efa3de35），而采用 headless browsers 模拟前端操作的思路，当字段发生变化时，手动打卡一次即可，无需更改代码。
+国科大每日健康打卡系统的字段经常变动，采用手动 POST 的思路时可能需要频繁更改代码，而采用 headless browsers 模拟前端操作的思路，当字段发生变化时，手动打卡一次即可，无需更改代码。
 
 ## 免责声明
 
