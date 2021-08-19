@@ -13,7 +13,7 @@
 
 ## 开始
 
-- 环境要求：一个 24 小时开机的 Linux 操作系统（需要使用 systemd，如 Ubuntu 16.04, Debian Jessie, CentOS 7, Fedora 等，树莓派也行），Python 3；
+- 环境要求：一个 24 小时开机的 Linux 操作系统（需要使用 systemd，如 Ubuntu 16.04, Debian Jessie, CentOS 7, Fedora 等，树莓派也行），Python 3.6+；
 
 - ```bash
     git clone https://github.com/yusanshi/ucas-checkin && cd ucas-checkin
@@ -35,7 +35,7 @@
 
 你可以使用 `systemctl status ucas-checkin.timer` 查看打卡记录和下次打卡时间。
 
-如您希望打卡失败时自动通知自己，请查看 `ucas-checkin.py` 文件并在相应位置加入通知的代码（推荐使用邮件、Telegram 机器人等方式）。您也可以省略此操作，因为绑定了国科大企业微信之后，如当天没有打卡，会自动在 12:00 左右收到提醒信息（这也是为什么本脚本设置的最后打卡时间在 11:00 :)
+如您希望打卡失败时自动通知自己，请在 `ucas-checkin.py` 文件中的 `notify_myself` 函数中加入通知的代码（推荐使用邮件、Telegram 机器人等方式）。您也可以省略此操作，因为绑定了国科大企业微信之后，如当天没有打卡，会自动在 12:00 左右收到提醒信息（这也是为什么本脚本设置的最后打卡时间在 11:00 :)
 
 
 ## 致谢
