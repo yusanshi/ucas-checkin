@@ -16,7 +16,9 @@
 - 环境要求：
 
     - 一个 24 小时开机的 Linux 操作系统（需要使用 systemd，如 Ubuntu 16.04, Debian Jessie, CentOS 7, Fedora 等，树莓派也行）
-    - Python 3.5+
+    - Python 3.6+
+      - 如果 `/usr/bin/python3 --version` 命令显示的 Python 3 版本号低于 3.6，请额外安装 Python 3.6 或以上版本，并将本 README 和 `ucas-checkin.service` 中出现的 `/usr/bin/python3` 全部换成 `/usr/bin/python3.X`，如您安装了 Python 3.8，则将 `/usr/bin/python3` 换成 `/usr/bin/python3.8`
+      - Python 3.6+ 的要求是为了安装 torch 用于验证码的识别
 
 -   ```bash
     git clone https://github.com/yusanshi/ucas-checkin && cd ucas-checkin
