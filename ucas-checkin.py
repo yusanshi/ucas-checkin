@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import os
+import easyocr
 
 from time import sleep
 from selenium import webdriver
@@ -26,6 +27,10 @@ def main():
     options = Options()
     options.add_argument('--no-sandbox')
     options.add_argument('--headless')
+    options.add_argument(
+        '--user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36'
+    )
+
     driver = webdriver.Chrome(executable_path='/usr/bin/chromedriver',
                               options=options)
 
@@ -38,6 +43,15 @@ def main():
 
     driver.find_element_by_id('username').send_keys(data['USERNAME'])
     driver.find_element_by_id('password').send_keys(data['PASSWORD'])
+    if driver.find_elements_by_id('validate'):
+        # If has the validating code
+        image = driver.find_element_by_css_selector(
+            '.validate img').screenshot_as_png
+        reader = easyocr.Reader(['en'])
+        captcha = reader.readtext(image, detail=0, allowlist='0123456789')[0]
+        print('Captcha recognized: {}'.format(captcha))
+        driver.find_element_by_id('validate').send_keys(captcha)
+
     driver.find_element_by_id('login').click()
 
     sleep(5)

@@ -20,7 +20,7 @@
 
 -   ```bash
     git clone https://github.com/yusanshi/ucas-checkin && cd ucas-checkin
-    sudo /usr/bin/python3 -m pip install selenium
+    sudo /usr/bin/python3 -m pip install selenium easyocr
     sudo apt-get install chromium-chromedriver # 非 Ubuntu/Debian 系统自行使用合适的包管理器安装
     sudo cp ucas-checkin.py /root/ucas-checkin.py
     sudo cp ucas-checkin.{service,timer} /etc/systemd/system/
@@ -35,7 +35,7 @@
     PASSWORD=你的CAS登录密码
     ```
 
-你可以使用 `sudo /usr/bin/python3 /root/ucas-checkin.py` 命令来测试打卡。
+你可以使用 `sudo /usr/bin/python3 /root/ucas-checkin.py` 命令来测试打卡（首次运行需要下载用于 OCR 的模型文件，请耐心等待）。
 
 本脚本默认在每天 8:00 至 11:00 之间随机选择一个时间打卡一次，请确保你的系统时钟和时区设置是正确的，或者自行编辑 `ucas-checkin.timer` 文件设置打卡时间。
 
