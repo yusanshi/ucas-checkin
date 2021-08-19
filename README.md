@@ -13,7 +13,7 @@
 
 ## 开始
 
-- 环境要求：一个 24 小时开机的 Linux 操作系统（需要使用 systemd，如 Ubuntu 16.04, Debian Jessie, CentOS 7, Fedora 等，树莓派也行），Python 3.6+；
+- 环境要求：一个 24 小时开机的 Linux 操作系统（需要使用 systemd，如 Ubuntu 16.04, Debian Jessie, CentOS 7, Fedora 等，树莓派也行），Python 3.5+；
 
 -   ```bash
     git clone https://github.com/yusanshi/ucas-checkin && cd ucas-checkin

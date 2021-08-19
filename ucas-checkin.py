@@ -62,7 +62,7 @@ if __name__ == '__main__':
             print('Success')
             break
         except Exception as e:
-            print(f'Failed for {i+1} times: {e}')
+            print('Failed for {} times: {}'.format(i + 1, e))
             sleep(10 * (i + 1))
     else:
         notify_myself('Failed')
