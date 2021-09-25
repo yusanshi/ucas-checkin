@@ -55,7 +55,7 @@ def main():
 
     sleep(5)
     WebDriverWait(driver, 20).until(
-        EC.element_to_be_clickable((By.ID, 'report-submit-btn'))).click()
+        EC.element_to_be_clickable((By.ID, 'report-submit-btn-a24'))).click()
 
     WebDriverWait(driver, 20).until(
         EC.presence_of_element_located((By.CLASS_NAME, 'alert-success')))
