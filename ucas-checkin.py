@@ -1,6 +1,5 @@
 import os
 import easyocr
-import warnings
 
 from time import sleep
 from selenium import webdriver
@@ -20,8 +19,12 @@ def main():
 
     data = {}
     for line in lines:
-        key, value = line.split('=')
-        data[key] = value
+        try:
+            key, value = line.split('=')
+            data[key] = value
+        except ValueError:
+            # In case there are some more blank lines
+            pass
 
     options = Options()
     options.add_argument('--no-sandbox')
@@ -69,9 +72,6 @@ def notify_myself(message):
 
 
 if __name__ == '__main__':
-    # https://github.com/pytorch/pytorch/issues/54846
-    # Suppress the annoying warning
-    warnings.filterwarnings('ignore', category=UserWarning)
     for i in range(RETRY):
         try:
             main()
