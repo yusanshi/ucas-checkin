@@ -20,14 +20,10 @@
 
 ## 开始
 
-在以下两个模式中任选其一。
-
-### systemd 用户服务模式（推荐）
-
 以普通用户身份在任意目录下运行以下命令：
 
 ```bash
-loginctl enable-linger $USER # 普通用户免登录运行 systemd 服务
+sudo loginctl enable-linger $USER # 普通用户免登录运行 systemd 服务
 /usr/bin/python3 -m pip install selenium==3.* easyocr
 sudo apt-get install chromium-chromedriver # 非 Ubuntu/Debian 系统自行使用合适的包管理器安装
 git clone https://github.com/yusanshi/ucas-checkin && cd ucas-checkin
@@ -38,7 +34,7 @@ systemctl --user daemon-reload
 systemctl --user enable --now ucas-checkin.timer
 ```
 
-在 `/home/$USER` 目录下创建 [`ucas-checkin.txt` 文件](ucas-checkin.example.txt)，填入以下内容：
+在 `$HOME` 目录下创建 [`ucas-checkin.txt` 文件](ucas-checkin.example.txt)，填入以下内容：
 
 ```ini
 USERNAME=你的CAS登录学号
@@ -52,39 +48,7 @@ rm -rfv ~/.EasyOCR
 tar -xzvf easyocr.tar.gz -C ~
 rm easyocr.tar.gz
 ```
-
-你可以使用 `systemctl --user status ucas-checkin.timer` 检查打卡服务状态，使用 `systemctl --user list-timers ucas-checkin.timer`  来查看上次和下次打卡时间。
-
-### systemd 系统服务模式
-
-以普通用户身份在任意目录下运行以下命令：
-
-```bash
-sudo -H /usr/bin/python3 -m pip install selenium==3.* easyocr
-sudo apt-get install chromium-chromedriver # 非 Ubuntu/Debian 系统自行使用合适的包管理器安装
-git clone https://github.com/yusanshi/ucas-checkin && cd ucas-checkin
-sudo cp ucas-checkin.py /root/ucas-checkin.py
-sudo cp ucas-checkin.{service,timer} /etc/systemd/system/
-sudo systemctl daemon-reload
-sudo systemctl enable --now ucas-checkin.timer
-```
-
-在 `/root` 目录下创建 [`ucas-checkin.txt` 文件](ucas-checkin.example.txt)，填入以下内容：
-
-```ini
-USERNAME=你的CAS登录学号
-PASSWORD=你的CAS登录密码
-```
-
-你可以使用 `sudo -i /usr/bin/python3 /root/ucas-checkin.py` 命令来测试打卡。首次运行需要下载用于 OCR 的模型文件，请耐心等待。如您的下载速度过慢或无法下载，请使用以下命令手动下载：
-```bash
-wget https://storage.yusanshi.com/easyocr.tar.gz
-sudo rm -rfv /root/.EasyOCR
-sudo tar -xzvf easyocr.tar.gz -C /root
-rm easyocr.tar.gz
-```
-
-你可以使用 `systemctl status ucas-checkin.timer` 检查打卡服务状态，使用 `systemctl list-timers ucas-checkin.timer`  来查看上次和下次打卡时间。
+初步测试成功后，使用 `systemctl --user start ucas-checkin.service` 进一步测试作为 systemd service 时的运行情况。使用 `systemctl --user status ucas-checkin.service` 查看打卡日志，使用 `systemctl --user list-timers ucas-checkin.timer`  来查看上次和下次打卡时间。
 
 ## 其他
 
@@ -95,5 +59,5 @@ rm easyocr.tar.gz
 
 ## 致谢
 
-systemd 的配置文件和本 README 中的`开始`部分借鉴于 [iBug/thu-checkin](https://github.com/iBug/thu-checkin) 项目。
+systemd 的配置文件和本 README 中的 `开始` 部分借鉴于 [iBug/thu-checkin](https://github.com/iBug/thu-checkin) 项目。
 
