@@ -34,6 +34,9 @@ systemctl --user daemon-reload
 systemctl --user enable --now ucas-checkin.timer
 ```
 
+> 如果在运行 `systemctl --user daemon-reload` 命令时，显示 `Failed to connect to bus: No such file or directory` 的错误信息，请检查 `echo $XDG_RUNTIME_DIR` 的输出是否为空，如果为空，在 `.bashrc` 中添加 `export XDG_RUNTIME_DIR=/run/user/$(id -u)`，参考[问题](https://serverfault.com/questions/936985/cannot-use-systemctl-user-due-to-failed-to-get-d-bus-connection-permission)。
+
+
 在 `$HOME` 目录下创建 [`ucas-checkin.txt` 文件](ucas-checkin.example.txt)，填入以下内容：
 
 ```ini
