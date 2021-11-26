@@ -3,6 +3,7 @@ import easyocr
 
 from time import sleep
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -29,41 +30,42 @@ def main():
     options = Options()
     options.add_argument('--no-sandbox')
     options.add_argument('--headless')
+    options.add_argument('--disable-dev-shm-usage')
+    options.add_argument('--disable-gpu')
+    options.add_argument('--disable-extensions')
     options.add_argument(
         '--user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36'
     )
 
-    driver = webdriver.Chrome(executable_path='/usr/bin/chromedriver',
-                              options=options)
+    service = Service('/usr/lib/chromium-browser/chromedriver')
+    with webdriver.Chrome(service=service, options=options) as driver:
+        driver.get(LOGIN_URL)
 
-    driver.get(LOGIN_URL)
+        sleep(5)
+        WebDriverWait(driver, 20).until(
+            EC.presence_of_element_located((By.ID, 'username')))
 
-    sleep(5)
-    WebDriverWait(driver,
-                  20).until(EC.presence_of_element_located(
-                      (By.ID, 'username')))
+        driver.find_element(By.ID, 'username').send_keys(data['USERNAME'])
+        driver.find_element(By.ID, 'password').send_keys(data['PASSWORD'])
+        if driver.find_elements(By.ID, 'validate'):
+            # If has the validating code
+            image = driver.find_element(By.CSS_SELECTOR,
+                                        '.validate img').screenshot_as_png
+            reader = easyocr.Reader(['en'])
+            captcha = reader.readtext(image, detail=0,
+                                      allowlist='0123456789')[0]
+            print('Captcha recognized: {}'.format(captcha))
+            driver.find_element(By.ID, 'validate').send_keys(captcha)
 
-    driver.find_element_by_id('username').send_keys(data['USERNAME'])
-    driver.find_element_by_id('password').send_keys(data['PASSWORD'])
-    if driver.find_elements_by_id('validate'):
-        # If has the validating code
-        image = driver.find_element_by_css_selector(
-            '.validate img').screenshot_as_png
-        reader = easyocr.Reader(['en'])
-        captcha = reader.readtext(image, detail=0, allowlist='0123456789')[0]
-        print('Captcha recognized: {}'.format(captcha))
-        driver.find_element_by_id('validate').send_keys(captcha)
+        driver.find_element(By.ID, 'login').click()
 
-    driver.find_element_by_id('login').click()
+        sleep(5)
+        WebDriverWait(driver, 20).until(
+            EC.element_to_be_clickable(
+                (By.ID, 'report-submit-btn-a24'))).click()
 
-    sleep(5)
-    WebDriverWait(driver, 20).until(
-        EC.element_to_be_clickable((By.ID, 'report-submit-btn-a24'))).click()
-
-    WebDriverWait(driver, 20).until(
-        EC.presence_of_element_located((By.CLASS_NAME, 'alert-success')))
-
-    driver.close()
+        WebDriverWait(driver, 20).until(
+            EC.presence_of_element_located((By.CLASS_NAME, 'alert-success')))
 
 
 def notify_myself(message):

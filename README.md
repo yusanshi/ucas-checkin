@@ -24,7 +24,7 @@
 
 ```bash
 sudo loginctl enable-linger $USER # 普通用户免登录运行 systemd 服务
-/usr/bin/python3 -m pip install selenium==3.* easyocr
+/usr/bin/python3 -m pip install selenium easyocr
 sudo apt-get install chromium-chromedriver # 非 Ubuntu/Debian 系统自行使用合适的包管理器安装
 git clone https://github.com/yusanshi/ucas-checkin && cd ucas-checkin
 cp ucas-checkin.py ~/ucas-checkin.py
