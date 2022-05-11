@@ -2,8 +2,8 @@
 Description=UCAS Daily Checkin Timer
 
 [Timer]
-OnCalendar=*-*-* 8:00
-RandomizedDelaySec=3h
+OnCalendar=*-*-* 6:00
+RandomizedDelaySec=2h
 Persistent=true
 
 [Install]
