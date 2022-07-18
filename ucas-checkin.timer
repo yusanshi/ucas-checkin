@@ -1,9 +1,9 @@
 [Unit]
-Description=UCAS Daily Checkin Timer
+Description=UCAS Checkin Timer
 
 [Timer]
 OnCalendar=*-*-* 6:00
-RandomizedDelaySec=2h
+RandomizedDelaySec=1h
 Persistent=true
 
 [Install]

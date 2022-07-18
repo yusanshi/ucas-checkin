@@ -1,9 +1,9 @@
 [Unit]
-Description=UCAS Daily Checkin Service
+Description=UCAS Checkin Service
 After=network.target network-online.target
 Wants=network-online.target
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/python3 %h/ucas-checkin.py
+ExecStart=/usr/bin/python3 %h/ucas-checkin/main.py
 Environment=PYTHONUNBUFFERED=1

@@ -20,14 +20,20 @@
 
 ## 开始
 
-以普通用户身份在任意目录下运行以下命令：
+以普通用户身份运行以下命令：
 
 ```bash
 sudo loginctl enable-linger $USER # 普通用户免登录运行 systemd 服务
 /usr/bin/python3 -m pip install selenium easyocr
 sudo apt-get install chromium-chromedriver # 非 Ubuntu/Debian 系统自行使用合适的包管理器安装
+cd ~
 git clone https://github.com/yusanshi/ucas-checkin && cd ucas-checkin && git checkout main
-cp ucas-checkin.py ~/ucas-checkin.py
+
+cp config.sample.py config.py
+vim config.py
+cp notify.sample.py notify.py
+vim notify.py
+
 mkdir -p ~/.config/systemd/user
 cp ucas-checkin.{service,timer} ~/.config/systemd/user/
 systemctl --user daemon-reload
@@ -36,15 +42,7 @@ systemctl --user enable --now ucas-checkin.timer
 
 > 如果在运行 `systemctl --user daemon-reload` 命令时，显示 `Failed to connect to bus: No such file or directory` 的错误信息，请检查 `echo $XDG_RUNTIME_DIR` 的输出是否为空，如果为空，在 `.bashrc` 中添加 `export XDG_RUNTIME_DIR=/run/user/$(id -u)`，参考[问题](https://serverfault.com/questions/936985/cannot-use-systemctl-user-due-to-failed-to-get-d-bus-connection-permission)。
 
-
-在 `$HOME` 目录下创建 [`ucas-checkin.txt` 文件](ucas-checkin.example.txt)，填入以下内容：
-
-```ini
-USERNAME=你的CAS登录学号
-PASSWORD=你的CAS登录密码
-```
-
-你可以使用 `/usr/bin/python3 ~/ucas-checkin.py` 命令来测试打卡。首次运行需要下载用于 OCR 的模型文件，请耐心等待。如您的下载速度过慢或无法下载，请使用以下命令手动下载：
+使用 `/usr/bin/python3 ~/ucas-checkin/main.py` 命令来测试打卡。首次运行需要下载用于 OCR 的模型文件，请耐心等待。如您的下载速度过慢或无法下载，请使用以下命令手动下载：
 ```bash
 wget https://storage.yusanshi.com/easyocr.tar.gz
 rm -rfv ~/.EasyOCR
@@ -55,9 +53,7 @@ rm easyocr.tar.gz
 
 ## 其他
 
-本脚本默认在每天 6:00 至 8:00 之间随机选择一个时间打卡一次，请确保你的系统时钟和时区设置是正确的，或者自行编辑 `ucas-checkin.timer` 文件设置打卡时间。
-
-如您希望打卡失败时自动通知自己，请在 `ucas-checkin.py` 文件中的 `notify_myself` 函数中加入通知的代码（推荐使用邮件、Telegram 机器人等方式）。您也可以省略此操作，因为绑定了国科大企业微信之后，如当天没有打卡，会自动在 12:00 左右收到提醒信息。
+本脚本默认在每天 6:00 至 7:00 之间随机选择一个时间打卡一次，请确保你的系统时钟和时区设置是正确的，或者自行编辑 `ucas-checkin.timer` 文件设置打卡时间。
 
 
 ## 致谢
